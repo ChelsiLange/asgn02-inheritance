@@ -1,22 +1,30 @@
 <?php
 
 class Ships {
-  var $name;
-  var $length;
-  var $beam;
-  var $draft;
+  protected $name;
+  public $length;
+  public $beam;
+  public $draft;
   //all measurements will use meters
 
-  function area() {
+  public function area() {
     return $this->length * $this->beam;
+  }
+
+  public function shipName() {
+    return "The ". $this->name;
+  }
+
+  public function setShipName($value) {
+    $this->name = $value;
   }
 }
 
 class ContainerShips extends Ships {
-  var $containerCapacity;
+  public $containerCapacity;
   //using number of conex containers
 
-  function fitsBeneathBridge() {
+  public function fitsBeneathBridge() {
     $height = $this->area() * $this->containerCapacity - $this->draft * 5000;
     if ($height < 500) {
       return $this->name ." can fit beneath the bridge";
@@ -27,10 +35,10 @@ class ContainerShips extends Ships {
 }
 
 class BulkCarriers extends Ships {
-  var $bulkType = "wet";
+  public $bulkType = "wet";
   //"wet" or "dry"
 
-  function unloadByPump() {
+  public function unloadByPump() {
     if ($this->bulkType = "wet") {
       return $this->name ." can be unloaded with a pump";
     } else {
@@ -40,31 +48,31 @@ class BulkCarriers extends Ships {
 }
 
 $ship1 = new Ships;
-$ship1->name = "The Kenny Loggins";
+$ship1->setShipName("Kenny Loggins");
 $ship1->length = 100;
 $ship1->beam = 20;
 $ship1->draft = 10;
 
 $ship2 = new ContainerShips;
-$ship2->name = "Revenger";
+$ship2->setShipName("Revenger");
 $ship2->length = 100;
 $ship2->beam = 10;
 $ship2->draft = 8;
 $ship2->containerCapacity = 20;
 
 $ship3 = new BulkCarriers;
-$ship3->name = "Big Oily";
+$ship3->setShipName("Big Oily");
 $ship3->length = 150;
 $ship3->beam = 30;
 $ship3->draft = 15;
 $ship3->bulkType = "wet";
 
 
-echo $ship1->name ."<br>";
+echo $ship1->shipName() ."<br>";
 echo $ship1->area() ."<br>";
 
-echo $ship2->name ."<br>";
+echo $ship2->shipName() ."<br>";
 echo $ship2->fitsBeneathBridge() ."<br>";
 
-echo $ship3->name ."<br>";
+echo $ship3->shipName() ."<br>";
 echo $ship3->unloadByPump() ."<br>";
